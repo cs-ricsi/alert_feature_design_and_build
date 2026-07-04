@@ -39,7 +39,7 @@ At a high level, the MVP is intended to cover:
 
 - `docs/` — project documentation, decision logs, and open questions
 - `src/` — application source code
-- `prompt-artifacts/` — raw prompts and prompt history collected during development
+- `prompts/` — raw prompts and prompt history collected during development
 
 ---
 
@@ -53,7 +53,7 @@ Project documentation is maintained in the `docs/` directory. This includes:
 - decision logs
 - open questions
 
-Prompt history and raw prompts are stored separately in `prompt-artifacts/`.
+Prompt history and raw prompts are stored separately in `prompts/`.
 
 Because the project is being developed from a short and ambiguous brief, the documentation is expected to evolve alongside the implementation.
 
