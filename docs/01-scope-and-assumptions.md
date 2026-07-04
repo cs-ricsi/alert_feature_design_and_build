@@ -18,11 +18,13 @@ The MVP includes the minimum functionality needed to demonstrate the core alerti
 
 The system should allow a user to create and manage alerts for important world-event notifications.
 
-For the MVP, an alert represents a channel-specific subscription to important events rather than a user-defined event rule or event-category filter. Each alert is tied to exactly one notification channel.
+For the MVP, an alert represents a **channel-specific subscription with category selection** rather than a fully user-defined event rule. Each alert is tied to exactly one notification channel and includes one or more selected categories used for event matching.
 
 This includes:
 
 - creating an alert for a supported notification channel
+- selecting one or more supported alert categories for that alert
+- editing the category selections of an existing alert
 - viewing existing alerts
 - modifying an existing alert
 - deleting an existing alert
@@ -33,13 +35,14 @@ Because the MVP initially supports only **email** and **Slack**, a user can have
 
 The system should support receiving events that are intended to trigger alerts and processing them through the alerting flow.
 
-For the MVP, the responsibility of the system is to accept an incoming alert-triggering event and distribute it to all existing alerts. Determining which external events should enter the system as alert-triggering events is considered a separate concern from the alert delivery flow itself.
+For the MVP, the responsibility of the system is to receive alert-triggering events from an external source, process them through the alerting flow, and notify the alerts whose selected categories match the event metadata. Determining which real-world events should enter the system is treated as a separate concern from the alert delivery flow itself.
 
 This includes:
 
-- creating, ingesting, or otherwise receiving an event that should trigger alerts
-- processing that event through the alerting flow
-- notifying all existing alerts for that event
+- creating, ingesting, or otherwise receiving events that should trigger alerts
+- processing those events through the alerting flow
+- matching event metadata to alert category selections
+- notifying the alerts that match a given event
 
 ### 3. Notification delivery
 
@@ -66,9 +69,9 @@ A dedicated administrator-facing view for internal or privileged users is consid
 
 The following items are intentionally out of scope for this MVP.
 
-### 1. User-defined alert filtering and alert types
+### 1. Fully user-defined alert rules and advanced filtering
 
-Users do not define custom alert rules, event categories, thresholds, or filters.
+The MVP supports selecting from a predefined set of alert categories, but users do not define custom alert rules, arbitrary filters, thresholds, keyword-based matching, or complex event conditions.
 
 ### 2. Dedicated administrator-facing dashboard
 
@@ -76,7 +79,7 @@ The MVP does not include a separate internal dashboard for administrator or priv
 
 ### 3. Event importance classification inside the alerting system
 
-The MVP does not determine which real-world events are important enough to trigger alerts. It assumes that alert-triggering events are supplied to the system by an external source, manual input, or a simplified ingestion mechanism.
+The MVP does not independently determine which real-world events are important enough to trigger alerts. It assumes that alert-triggering events are supplied to the system by an external source, manual input, or a simplified ingestion mechanism.
 
 ### 4. Production-grade event ingestion and source integrations
 
@@ -104,9 +107,9 @@ The MVP is based on the following working assumptions derived from the brief and
 
 The MVP assumes that events intended to trigger alerts are supplied to the system by an external source, manual input, seeded data, or another simplified ingestion mechanism. Determining which real-world events should become alert-triggering events is treated as a separate concern from the alert delivery workflow itself.
 
-### 2. Each alert is tied to a single notification channel
+### 2. Each alert is tied to a single notification channel and one or more selected categories
 
-For the MVP, an alert is assumed to represent a channel-specific subscription to alert-triggering events. A user may therefore create separate alerts for different supported channels rather than configuring multiple channels within a single alert.
+For the MVP, an alert is assumed to represent a channel-specific subscription to alert-triggering events with one or more selected categories. A user may therefore create separate alerts for different supported channels rather than configuring multiple channels within a single alert.
 
 This also implies that alerts may require channel-specific configuration data depending on the selected channel. For example, an email alert may require an email address, while a Slack alert may require a Slack-specific identifier or destination value.
 
@@ -116,7 +119,7 @@ The MVP assumes that alert creation alone is not sufficient and that users need 
 
 ### 4. Additional alert types and delivery channels are future extensions
 
-The MVP assumes that the alert model will likely become more sophisticated over time, potentially including alert types, filters, or richer delivery preferences. The initial implementation should therefore avoid making architectural choices that would unnecessarily block these extensions later.
+The MVP assumes that the alert model will likely become more sophisticated over time, potentially including richer alert types, more advanced filters, or more granular delivery preferences. The initial implementation should therefore avoid making architectural choices that would unnecessarily block these extensions later.
 
 ### 5. Supported channels are assumed to have a notification delivery mechanism available
 
