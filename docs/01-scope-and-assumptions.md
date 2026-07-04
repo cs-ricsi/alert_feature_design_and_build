@@ -89,6 +89,8 @@ The MVP does not require a production-ready pipeline for ingesting breaking news
 
 The MVP does not include retry queues, batching, throttling, delivery analytics, or other production-grade notification infrastructure beyond what is needed to demonstrate the core alert flow.
 
+This also means the MVP does not aim to provide a robust notification failure-handling workflow, such as automatic retries, retry scheduling, dead-letter handling, or a dedicated operational UI for failed deliveries.
+
 ### 6. Channel-specific validation and delivery verification
 
 The MVP does not include advanced validation of channel-specific configuration data, such as verifying that a provided email address is valid or that a Slack user identifier or destination is correct and reachable.
@@ -98,6 +100,12 @@ The MVP also does not include delivery verification or notification delivery che
 ### 7. Full production hardening
 
 The MVP does not aim to cover production concerns such as comprehensive authorization models, large-scale observability, high-volume performance optimization, or deployment-grade operational safeguards.
+
+### 8. Full authentication and user-management flows
+
+The MVP does not aim to implement a complete authentication, registration, or user-management system unless that becomes necessary for the chosen implementation approach.
+
+The alerting flow may rely on a simplified or assumed user context for demonstration purposes, as long as alerts can still be associated with a user in the MVP data model.
 
 ## Assumptions
 
