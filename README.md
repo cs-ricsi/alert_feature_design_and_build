@@ -2,11 +2,13 @@
 
 ## Overview
 
-This MVP is a prototype alerting system that allows users to subscribe to important world events and receive notifications when relevant events occur.
+Alerts MVP is a timeboxed prototype of a world-event alerting system.
 
-The initial product brief focuses on alerts for significant events such as breaking news, market movements, and natural disasters, with notification delivery through email and Slack. The system is also expected to support an admin-facing view and be structured in a way that allows additional notification channels to be added in the future.
+The MVP allows users to create alerts for selected event categories and receive notifications through supported channels when matching events are processed by the system. The initial notification channels are **email** and **Slack**.
 
-This repository contains the MVP implementation, supporting documentation, and working artifacts produced during the design and development process.
+The system is being designed with a limited implementation timeframe in mind, so the focus is on delivering a coherent end-to-end alerting flow rather than a production-ready platform.
+
+This repository contains the MVP implementation, project documentation, decision logs, and prompt artifacts produced during the design and development process.
 
 ---
 
@@ -20,42 +22,45 @@ The project is based on the following brief:
 
 ## Current Goal
 
-The current goal of this project is to design and implement a timeboxed MVP that demonstrates the core alerting workflow end-to-end, while also documenting the assumptions, design decisions, and implementation process clearly.
+The goal of this project is to design and implement a timeboxed MVP that demonstrates the core alerting workflow end-to-end while documenting the assumptions, decisions, and working process clearly.
 
-At a high level, the MVP is intended to explore:
+At a high level, the MVP is intended to cover:
 
-- user-configurable alerts
-- multi-channel notification delivery
-- event processing and alert matching
-- an admin view for visibility into the system
-- an extensible structure for future notification channels
+- alert creation and management
+- category-based alert subscriptions
+- multi-channel notification delivery through email and Slack
+- event ingestion, matching, and notification dispatch
+- a user-facing alert management view
+- an architecture that can be extended with additional notification channels later
 
 ---
 
 ## Repository Structure
 
-- `docs/` — project documentation, assumptions, design notes, implementation plan, and prompt history
+- `docs/` — project documentation, decision logs, and open questions
 - `src/` — application source code
-- `prompt-artifacts/` — raw prompt and process artifacts collected during development
+- `prompts/` — raw prompts and prompt history collected during development
 
 ---
 
 ## Documentation
 
-Detailed project documentation is maintained in the `docs/` directory. This includes:
+Project documentation is maintained in the `docs/` directory. This includes:
 
 - the original brief
 - scope and assumptions
-- requirements and user flows
-- architecture and data model notes
-- implementation planning and progress log
-- prompt history and working artifacts
+- architecture notes
+- decision logs
+- open questions
 
-Because the project is still being shaped from a high-level brief, the documentation is expected to evolve alongside the implementation.
+Prompt history and raw prompts are stored separately in `prompts/`.
+
+Because the project is being developed from a short and ambiguous brief, the documentation is expected to evolve alongside the implementation.
 
 ---
 
 ## Status
 
-This project is currently in the MVP design and implementation phase.
-Requirements, data structures, and technical details may be refined as the solution is developed and the scope is clarified.
+This project is currently in the MVP planning and implementation phase.
+
+The scope, architecture, and implementation details are being defined incrementally based on the brief, documented assumptions, and decisions made during the build process.
