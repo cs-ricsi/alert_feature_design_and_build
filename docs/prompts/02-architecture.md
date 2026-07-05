@@ -99,3 +99,51 @@ we can reflect this in 01-scope-and-assumptions.md
 # Prompt 022
 
 Recheck the main README file:
+
+# Prompt 023
+
+can we continue with the architecture doc?
+
+# Prompt 024
+
+what are the sections of the architecture docs?
+
+# Prompt 025
+
+We do we want to include/discuss technical requirements or choices?
+
+# Prompt 026
+
+in my opinion, I would create a separate document for this
+
+# Prompt 027
+
+continue with the architecture document
+
+# Prompt 028
+
+We can remove the "Service" from the names as it is slightly too implementation-shaped. Merge the "Notification" and "Channel Sender Implementations". We can go with "Alert Matching and Dispatch".
+
+# Prompt 029
+
+keep deduplication concept in Event Processor, and we can move to the next section
+
+# Prompt 030
+
+We actually don't need to store the alert event, because when we fetch the events, we know, we only have to concider the latests news which are not older, then 10 minutes. When we are fetching in every 10 minutes, then the only new news can only be the ones, that are not older than 10 minutes. I see a small concern about this, where can be some overlaps, or news are being skipped, because they are 1 second older, then 10 minutes, but it was not fetched with the previous batch.
+
+# Prompt 031
+
+I want to pull every 10 minutes and only fetch the last 10 minutes, besides that I am aware that can be skipped news, this is just an MVP and we don't want to cover that edge case at the moment. Also in this case, I think we don't need the Processed Event Record, because now there is no reason to store the processed events, maybe we will implement it in the future, when it will be neccessary, but for now, we don't use it.
+
+# Prompt 032
+
+recheck the docs/decision-logs/004-event-ingestion-strategy.md document:
+
+# Prompt 033
+
+I aligned the Event Processor section in the 02-architecture.md document already. Can we take a look at the Core Domain Model again
+
+# Prompt 034
+
+What about categories and channels, besides Alert?
