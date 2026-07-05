@@ -13,15 +13,15 @@ For the MVP, alert-triggering events will be ingested by **polling FreeNewsAPI.i
 The ingestion model is based on the following decisions:
 
 - the system polls **FreeNewsAPI.io** every **10 minutes**
-- each polling cycle fetches a shared stream of recent articles
-- fetched articles are normalized into an internal alert-event shape
-- article metadata such as `uuid`, `topics`, `publisher`, and `published_at` is preserved where useful
+- each polling cycle fetches articles from the **last 10 minutes**
+- fetched articles are normalized into an internal event shape during processing
+- article metadata such as `uuid`, `topics`, `publisher`, and `published_at` is preserved where useful during the processing flow
 - alerts are matched against fetched events using the article `topics` and the categories selected on each alert
-- already processed articles are skipped based on their provider `uuid` to avoid duplicate notifications
+- the MVP does **not** persist processed event identifiers or implement a deduplication layer
 
 The MVP event flow is therefore:
 
-**poll → normalize → deduplicate → match → notify**
+**poll → normalize → match → notify**
 
 ## Reasoning
 
@@ -31,22 +31,24 @@ Polling a free external API is simpler and safer for the MVP than building a pro
 
 ### 2. FreeNewsAPI provides metadata that supports alert matching
 
-The provider returns article topics and a stable article identifier, which makes it suitable both for category-based routing and for deduplication.
+The provider returns article topics, publisher information, timestamps, and article identifiers. This makes it suitable for category-based routing without requiring the system to build its own event classification model.
 
 ### 3. Fetching once is more efficient than polling per category
 
-Because the provider already returns article topics, the system can fetch a shared stream of articles once and perform category matching internally rather than issuing separate requests per category.
+Because the provider already returns article topics, the system can fetch a shared stream of recent articles once and perform category matching internally rather than issuing separate requests per category.
 
-### 4. Deduplication is required for polling-based ingestion
+### 4. The MVP intentionally accepts a simplified polling window model
 
-Polling recent articles will naturally return overlapping results across runs. Tracking processed article UUIDs prevents duplicate notifications.
+The MVP fetches only the last 10 minutes of articles on each 10-minute polling cycle and does not persist processed event identifiers for deduplication.
+
+This keeps the ingestion flow smaller and easier to implement, but it also means the system may miss edge-case articles around polling boundaries if an article is not returned in the expected polling cycle and later falls outside the next 10-minute fetch window. This tradeoff is accepted for the MVP in order to keep the ingestion model simple.
 
 ## Impact
 
 This decision affects the MVP architecture in the following ways:
 
 - the system needs a scheduled polling component
-- the event-ingestion layer must normalize provider articles into an internal event format
+- the event-ingestion layer must normalize provider articles into an internal event format during processing
 - the alert dispatch flow must match article topics against alert categories before sending notifications
-- the system must store processed article UUIDs to avoid duplicate alerts
+- the MVP does not require processed-event persistence or a deduplication layer
 - the architecture should keep the provider integration isolated so it can be replaced or extended later
